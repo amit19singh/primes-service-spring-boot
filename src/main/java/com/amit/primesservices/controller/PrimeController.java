@@ -1,18 +1,21 @@
 package com.amit.primesservices.controller;
 
 import com.amit.primesservices.services.IPrimeService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
-@Service
-public class PrimeController implements IPrimeService {
-    @Override
-    public boolean isPrime(int n) {
-        if (n == 2)
-            return true;
-        for (long i = 0; i < n; i++) {
-            if (n % i == 0)
-                return false;
-        }
-        return true;
+@RestController
+@CrossOrigin
+@RequestMapping("/primes")
+@AllArgsConstructor
+public class PrimeController {
+
+    IPrimeService primeService;
+
+    @GetMapping("/{n}")
+    public boolean isPrime(@PathVariable long n) {
+        return primeService.isPrime(n);
     }
+
 }
