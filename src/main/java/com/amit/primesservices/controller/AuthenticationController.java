@@ -40,3 +40,4 @@ public class AuthenticationController {
         return tokenService.generateToken(authentication);
     }
 }
+
