@@ -5,6 +5,8 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,12 +30,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@AllArgsConstructor
 public class SecurityConfig {
 
-    private final RSAKey rsaKey;
-    public SecurityConfig() {
-        this.rsaKey = Jwks.generateRsa();
-    }
+    private final RSAKey rsaKey = Jwks.generateRsa();
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/register", "/login", "/primes/{n}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

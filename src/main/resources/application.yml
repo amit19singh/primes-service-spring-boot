@@ -2,7 +2,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:4003/primes
+    url: jdbc:postgresql://localhost:5432/primes
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
@@ -16,9 +16,14 @@ spring:
     init:
       mode: always
 
+  rabbitmq:
+    host: localhost
+    port: 4008
+    username: guest
+    password: guest
 
 server:
   port: 8085
 
-#debug: on
+debug: on
 
